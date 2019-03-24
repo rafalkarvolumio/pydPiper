@@ -80,47 +80,46 @@ CANVASES = {
 # To access system variables, refer to them within the db dictionary (e.g. db['title'])
 # To access the most recent previous state of a variable, refer to them within the dbp dictionary (e.g. dbp['title'])
 SEQUENCES = [
-	{	'name': 'seqSplash', 'canvases': [ { 'name':'splash', 'duration':4 } ], 'conditional':"db['state']=='starting'"   },
+	{	'name': 'seqSplash', 'canvases': [ { 'name':'splash', 'duration':4 } ], 'conditional': "db['state']=='starting'" },
 	{
 		'name': 'seqPlay',
 		'canvases': [
-			{ 'name':'playartist1', 'duration':12, 'conditional':"not db['stream']=='webradio'" },
-			{ 'name':'playtitle1', 'duration':12, 'conditional':"not db['stream']=='webradio'" },
-			{ 'name':'playartist2', 'duration':12, 'conditional':"not db['stream']=='webradio'" },
-			{ 'name':'playtitle2', 'duration':12, 'conditional':"not db['stream']=='webradio'" },
-			{ 'name':'playartist_radio', 'duration':12, 'conditional':"db['stream']=='webradio'" },
-			{ 'name':'playalbum_radio', 'duration':12, 'conditional':"db['stream']=='webradio' and db['album']" },
-			{ 'name':'playtitle_radio', 'duration':12, 'conditional':"db['stream']=='webradio'" },
+			{ 'name':'playartist', 'duration':15, 'conditional':"not db['encoding']=='webradio'" },
+			{ 'name':'playartist_radio', 'duration':15, 'conditional':"db['encoding']=='webradio'" },
+			{ 'name':'playalbum', 'duration':30, 'conditional':"not db['encoding']=='webradio'" },
+			{ 'name':'playalbum_radio', 'duration':15, 'conditional':"db['encoding']=='webradio' and db['album']" },
+			{ 'name':'playtitle', 'duration':30, 'conditional':"not db['encoding']=='webradio'" },
+			{ 'name':'playtitle_radio', 'duration':15, 'conditional':"db['encoding']=='webradio'" },
 		],
 		'conditional': "db['state']=='play'"
 	},
 	{
 		'name': 'seqStop',
 		'canvases': [
-			{ 'name':'stoptime', 'duration':1 },
-#			{ 'name':'weather', 'duration':10, 'conditional':"not db['outside_conditions']=='No data'" }
+			{ 'name':'stoptimetemp_popup', 'duration':9999, 'conditional':"not db['outside_conditions']=='No data'" },
+			{ 'name':'stoptime', 'duration':9999, 'conditional':"db['outside_conditions']=='No data'" }
 		],
 		'conditional': "db['state']=='stop'"
 	},
 	{
 		'name':'seqVolume',
-		'coordinates':(0,0),
-		'canvases': [ { 'name':'volume_changed', 'duration':5 } ],
+		'coordinates':(10,0),
+		'canvases': [ { 'name':'volume_changed', 'duration':2 } ],
 		'conditional': "db['volume'] != dbp['volume']",
-		'minimum':5,
+		'minimum':2,
 	},
-#	{
-#		'name': 'seqAnnouncePlay',
-#		'canvases': [ { 'name':'showplay', 'duration':1 } ],
-#		'conditional': "db['state'] != dbp['state'] and db['state']=='play'",
-#		'minimum':1,
-#	},
-#	{
-#		'name': 'seqAnnounceStop',
-#		'canvases': [ { 'name':'showstop', 'duration':1 } ],
-#		'conditional': "db['state'] != dbp['state'] and db['state']=='stop'",
-#		'minimum':1,
-#	},
+	{
+		'name': 'seqAnnouncePlay',
+		'canvases': [ { 'name':'showplay', 'duration':2 } ],
+		'conditional': "db['state'] != dbp['state'] and db['state']=='play'",
+		'minimum':2,
+	},
+	{
+		'name': 'seqAnnounceStop',
+		'canvases': [ { 'name':'showstop', 'duration':2 } ],
+		'conditional': "db['state'] != dbp['state'] and db['state']=='stop'",
+		'minimum':2,
+	},
 	{
 		'name':'seqAnnounceRandom',
 		'canvases': [ { 'name':'showrandom', 'duration':2 } ],
